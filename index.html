@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omnitrix Trivia Challenge</title>
+    <style>
+        :root {
+            --omnitrix-green: #00ff22;
+            --omnitrix-dark-green: #006411;
+            --bg-dark: #121212;
+            --panel-bg: #1e1e1e;
+            --text-light: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--omnitrix-green);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(0, 255, 34, 0.3);
+        }
+
+        .score-board {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #aaa;
+        }
+
+        .score-board span {
+            color: var(--omnitrix-green);
+            font-weight: bold;
+        }
+
+        /* 3D Card Flip Container */
+        .game-container {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 400px;
+            height: 500px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .card.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            border: 3px solid var(--omnitrix-dark-green);
+            box-sizing: border-box;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        /* Front Side (Trivia) */
+        .card-front {
+            background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+        }
+
+        .card-front h2 {
+            color: var(--omnitrix-green);
+            border-bottom: 2px solid var(--omnitrix-dark-green);
+            padding-bottom: 10px;
+            margin-top: 0;
+            text-align: center;
+            font-size: 1.4rem;
+        }
+
+        .trivia-list {
+            margin-top: 20px;
+            padding-left: 20px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .trivia-list li {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        /* Back Side (Identity & Image) */
+        .card-back {
+            background: linear-gradient(135deg, #151515 0%, #1a2e1a 100%);
+            transform: rotateY(180deg);
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .alien-image-container {
+            width: 100%;
+            height: 70%;
+            background-color: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            border: 1px dashed var(--omnitrix-dark-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .alien-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .alien-name {
+            color: var(--omnitrix-green);
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 15px 0 0 0;
+            letter-spacing: 1px;
+            text-shadow: 0 0 8px rgba(0,255,34,0.4);
+        }
+
+        .hint-text {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: auto;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            max-width: 400px;
+            justify-content: center;
+        }
+
+        .btn {
+            background-color: #252525;
+            color: white;
+            border: 2px solid #444;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-correct {
+            border-color: #28a745;
+        }
+        .btn-correct:hover {
+            background-color: #28a745;
+        }
+
+        .btn-wrong {
+            border-color: #dc3545;
+        }
+        .btn-wrong:hover {
+            background-color: #dc3545;
+        }
+
+        .btn-next {
+            border-color: var(--omnitrix-green);
+            color: var(--omnitrix-green);
+        }
+        .btn-next:hover {
+            background-color: var(--omnitrix-green);
+            color: black;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Omnitrix Trivia</h1>
+        <div class="score-board">Score: <span id="score">0</span> | Card: <span id="card-index">1</span>/<span id="total-cards">5</span></div>
+    </header>
+
+    <div class="game-container">
+        <div class="card" id="card" onclick="flipCard()">
+            <!-- FRONT FACE -->
+            <div class="card-face card-front">
+                <h2>Alien Profile Classified</h2>
+                <ul class="trivia-list" id="trivia-dump">
+                    <!-- Trivia items injected here -->
+                </ul>
+                <div class="hint-text">Click card to reveal Alien identity</div>
+            </div>
+            
+            <!-- BACK FACE -->
+            <div class="card-face card-back">
+                <div class="alien-image-container">
+                    <img id="alien-img" src="" alt="Alien Image">
+                </div>
+                <div class="alien-name" id="alien-name">Four Arms</div>
+                <div class="hint-text">Click card to look at clues again</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="controls">
+        <div id="scoring-controls" class="controls">
+            <button class="btn btn-wrong" onclick="submitAnswer(false)">I Was Wrong</button>
+            <button class="btn btn-correct" onclick="submitAnswer(true)">I Got It!</button>
+        </div>
+        <button id="next-control" class="btn btn-next hidden" onclick="nextCard()">Next Profile →</button>
+    </div>
+
+    <script>
+        // GAME DECK
+        // Customize your images by changing the "image" URL string below to any image web link!
+        const deck = [
+            {
+                name: "Heatblast",
+                image: "C:\Users\amand\Downloads\Heatblast.png", 
+                trivia: [
+                    "The very first alien form Ben ever unlocked in the pilot episode.",
+                    "A Pyronite originating from the magma star Pyros.",
+                    "Can manipulate fire, fly on a slab of rock, and absorb heat completely."
+                ]
+            },
+            {
+                name: "Four Arms",
+                image: "C:\Users\amand\Downloads\Four_arms_os_render.webp",
+                trivia: [
+                    "A Tetramand species from the desert world of Khoros.",
+                    "Possesses immense physical strength and highly durable, armored skin.",
+                    "Can generate sonic shockwaves simply by clapping his hands."
+                ]
+            },
+            {
+                name: "XLR8",
+                image: "C:\Users\amand\Downloads\XLR8.jpg",
+                trivia: [
+                    "A sleek Kineceleran capable of manipulating friction to sprint past 500 MPH.",
+                    "Features a built-in tactical black visor that automatically clips over his face.",
+                    "Has ball-shaped wheels on his feet making him navigate smoothly on ice or water."
+                ]
+            },
+            {
+                name: "Diamondhead",
+                image: "C:\Users\amand\Downloads\Diamondhead_B10.PNG.webp",
+                trivia: [
+                    "A crystalline Petrosapien whose body is denser than diamond.",
+                    "Can manipulate his structure to create crystal spikes, shields, and blades.",
+                    "His home planet Petropia was infamously shattered by the conqueror Vilgax."
+                ]
+            },
+            {
+                name: "Upgrade",
+                image: "C:\Users\amand\Downloads\UpgradeBenTen.jpg",
+                trivia: [
+                    "A liquid-metal biomechanical lifeform accidentally created by the Galvans.",
+                    "Can seamlessly attach to, control, and technologically upgrade any machine.",
+                    "Fires a high-powered plasma energy beam straight out of his primary circular eye."
+                ]
+            }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+        let hasFlippedCurrentCard = false;
+
+        const cardEl = document.getElementById('card');
+        const triviaDumpEl = document.getElementById('trivia-dump');
+        const alienImgEl = document.getElementById('alien-img');
+        const alienNameEl = document.getElementById('alien-name');
+        const scoreEl = document.getElementById('score');
+        const indexEl = document.getElementById('card-index');
+        const totalEl = document.getElementById('total-cards');
+        
+        const scoringControls = document.getElementById('scoring-controls');
+        const nextControl = document.getElementById('next-control');
+
+        // Initialize Game
+        function initGame() {
+            totalEl.textContent = deck.length;
+            loadCard(currentIndex);
+        }
+
+        function loadCard(index) {
+            hasFlippedCurrentCard = false;
+            cardEl.classList.remove('is-flipped');
+            
+            // Set up indicators
+            indexEl.textContent = index + 1;
+            
+            // Load trivia list items
+            triviaDumpEl.innerHTML = "";
+            deck[index].trivia.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                triviaDumpEl.appendChild(li);
+            });
+
+            // Load back of card asset links
+            alienImgEl.src = deck[index].image;
+            alienNameEl.textContent = deck[index].name;
+
+            // Reset controller view
+            scoringControls.classList.remove('hidden');
+            nextControl.classList.add('hidden');
+        }
+
+        function flipCard() {
+            cardEl.classList.toggle('is-flipped');
+            hasFlippedCurrentCard = true;
+        }
+
+        function submitAnswer(isCorrect) {
+            if (!hasFlippedCurrentCard) {
+                // Force a flip so they see the answer if they click early
+                flipCard();
+            }
+            if (isCorrect) {
+                score += 10;
+                scoreEl.textContent = score;
+            }
+            
+            scoringControls.classList.add('hidden');
+            nextControl.classList.remove('hidden');
+        }
+
+        function nextCard() {
+            currentIndex++;
+            if (currentIndex < deck.length) {
+                loadCard(currentIndex);
+            } else {
+                // Game Over Screen Override
+                document.querySelector('.game-container').innerHTML = `
+                    <div style="background: #1e1e1e; padding: 40px; border-radius: 20px; border: 3px solid var(--omnitrix-green); text-align: center; height: 80%; display: flex; flex-direction: column; justify-content: center;">
+                        <h2 style="color: var(--omnitrix-green); font-size: 2rem;">DECK COMPLETE</h2>
+                        <p style="font-size: 1.2rem; margin: 20px 0;">Your Brother's Final Score:</p>
+                        <div style="font-size: 4rem; font-weight: bold; color: white;">${score}</div>
+                        <p style="color: #666; margin-top: 20px;">Omnitrix power cells depleted.</p>
+                    </div>
+                `;
+                nextControl.classList.add('hidden');
+            }
+        }
+
+        window.onload = initGame;
+    </script>
+</body>
+</html>
