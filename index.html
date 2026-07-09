@@ -8,9 +8,10 @@
         :root {
             --omnitrix-green: #00ff22;
             --omnitrix-dark-green: #006411;
-            --bg-dark: #121212;
-            --panel-bg: #1e1e1e;
-            --text-light: #e0e0e0;
+            --bg-dark: #0a0f0d;
+            --panel-bg: #141a17;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
         }
 
         body {
@@ -18,30 +19,38 @@
             background-color: var(--bg-dark);
             color: var(--text-light);
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
+            box-sizing: border-box;
         }
 
         header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            width: 100%;
         }
 
         h1 {
             color: var(--omnitrix-green);
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 5px;
-            text-shadow: 0 0 10px rgba(0, 255, 34, 0.3);
+            margin: 10px 0 5px 0;
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px rgba(0, 255, 34, 0.4);
         }
 
         .score-board {
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-            color: #aaa;
+            font-size: 1rem;
+            color: var(--text-muted);
+            background: rgba(0, 100, 17, 0.15);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--omnitrix-dark-green);
+            display: inline-block;
         }
 
         .score-board span {
@@ -49,13 +58,12 @@
             font-weight: bold;
         }
 
-        /* 3D Card Flip Container */
         .game-container {
             perspective: 1000px;
             width: 100%;
-            max-width: 400px;
-            height: 500px;
-            margin-bottom: 30px;
+            max-width: 380px;
+            height: 480px;
+            margin-bottom: 20px;
         }
 
         .card {
@@ -79,15 +87,15 @@
             border-radius: 20px;
             border: 3px solid var(--omnitrix-dark-green);
             box-sizing: border-box;
-            padding: 30px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0, 255, 34, 0.1);
         }
 
         /* Front Side (Trivia) */
         .card-front {
-            background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+            background: linear-gradient(135deg, #0e1612 0%, #17241d 100%);
         }
 
         .card-front h2 {
@@ -96,24 +104,28 @@
             padding-bottom: 10px;
             margin-top: 0;
             text-align: center;
-            font-size: 1.4rem;
+            font-size: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .trivia-list {
-            margin-top: 20px;
+            margin-top: 15px;
             padding-left: 20px;
-            line-height: 1.6;
+            line-height: 1.5;
             flex-grow: 1;
+            overflow-y: auto;
         }
 
         .trivia-list li {
-            margin-bottom: 15px;
-            font-size: 1.05rem;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            color: #cbd5e1;
         }
 
         /* Back Side (Identity & Image) */
         .card-back {
-            background: linear-gradient(135deg, #151515 0%, #1a2e1a 100%);
+            background: linear-gradient(135deg, #0a110d 0%, #122c1b 100%);
             transform: rotateY(180deg);
             align-items: center;
             justify-content: space-between;
@@ -121,84 +133,99 @@
 
         .alien-image-container {
             width: 100%;
-            height: 70%;
-            background-color: rgba(0,0,0,0.3);
+            height: 65%;
+            background-color: rgba(0,0,0,0.4);
             border-radius: 12px;
-            border: 1px dashed var(--omnitrix-dark-green);
+            border: 2px solid var(--omnitrix-dark-green);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            position: relative;
         }
 
         .alien-image-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
         }
 
         .alien-name {
             color: var(--omnitrix-green);
-            font-size: 2rem;
-            font-weight: bold;
+            font-size: 1.8rem;
+            font-weight: 800;
             text-transform: uppercase;
-            margin: 15px 0 0 0;
-            letter-spacing: 1px;
-            text-shadow: 0 0 8px rgba(0,255,34,0.4);
+            margin: 10px 0 0 0;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 12px rgba(0, 255, 34, 0.6);
+            text-align: center;
         }
 
         .hint-text {
             text-align: center;
-            font-size: 0.85rem;
-            color: #666;
+            font-size: 0.8rem;
+            color: var(--text-muted);
             margin-top: auto;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* Controls */
         .controls {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             width: 100%;
-            max-width: 400px;
+            max-width: 380px;
             justify-content: center;
+            box-sizing: border-box;
         }
 
         .btn {
-            background-color: #252525;
+            background-color: #121e17;
             color: white;
-            border: 2px solid #444;
-            padding: 12px 24px;
-            border-radius: 8px;
+            border: 2px solid var(--omnitrix-dark-green);
+            padding: 12px 16px;
+            border-radius: 10px;
             font-weight: bold;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.2s ease;
             flex: 1;
             text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .btn:hover {
+        .btn:active, .btn:hover {
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 255, 34, 0.15);
         }
 
         .btn-correct {
-            border-color: #28a745;
+            border-color: #00ff22;
+            color: #00ff22;
         }
-        .btn-correct:hover {
-            background-color: #28a745;
+        .btn-correct:active, .btn-correct:hover {
+            background-color: #006411;
+            color: white;
         }
 
         .btn-wrong {
-            border-color: #dc3545;
+            border-color: #ef4444;
+            color: #ef4444;
         }
-        .btn-wrong:hover {
-            background-color: #dc3545;
+        .btn-wrong:active, .btn-wrong:hover {
+            background-color: #991b1b;
+            color: white;
         }
 
         .btn-next {
             border-color: var(--omnitrix-green);
             color: var(--omnitrix-green);
+            background-color: #162a1c;
         }
-        .btn-next:hover {
+        .btn-next:active, .btn-next:hover {
             background-color: var(--omnitrix-green);
             color: black;
         }
@@ -206,33 +233,64 @@
         .hidden {
             display: none !important;
         }
+
+        /* Results Panel */
+        .results-panel {
+            background: linear-gradient(135deg, #0e1612 0%, #1b2e23 100%);
+            padding: 30px;
+            border-radius: 20px;
+            border: 3px solid var(--omnitrix-green);
+            text-align: center;
+            height: 80%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-sizing: border-box;
+            box-shadow: 0 0 30px rgba(0, 255, 34, 0.2);
+        }
+
+        .results-panel h2 {
+            color: var(--omnitrix-green);
+            font-size: 1.8rem;
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .results-score {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            margin: 15px 0;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
     </style>
 </head>
 <body>
 
     <header>
         <h1>Omnitrix Trivia</h1>
-        <div class="score-board">Score: <span id="score">0</span> | Card: <span id="card-index">1</span>/<span id="total-cards">5</span></div>
+        <div class="score-board">Score: <span id="score">0</span> | Card: <span id="card-index">1</span>/<span id="total-cards">15</span></div>
     </header>
 
     <div class="game-container">
         <div class="card" id="card" onclick="flipCard()">
-            <!-- FRONT FACE -->
+            <!-- FRONT FACE (Trivia Clues) -->
             <div class="card-face card-front">
                 <h2>Alien Profile Classified</h2>
                 <ul class="trivia-list" id="trivia-dump">
-                    <!-- Trivia items injected here -->
+                    <!-- Trivia items dynamically loaded -->
                 </ul>
-                <div class="hint-text">Click card to reveal Alien identity</div>
+                <div class="hint-text">Click card to reveal Alien</div>
             </div>
             
-            <!-- BACK FACE -->
+            <!-- BACK FACE (Alien Identity & Graphic) -->
             <div class="card-face card-back">
                 <div class="alien-image-container">
-                    <img id="alien-img" src="" alt="Alien Image">
+                    <img id="alien-img" src="" alt="Alien Image" onerror="handleImgError(this)">
                 </div>
-                <div class="alien-name" id="alien-name">Four Arms</div>
-                <div class="hint-text">Click card to look at clues again</div>
+                <div class="alien-name" id="alien-name">Alien</div>
+                <div class="hint-text">Click card to see clues again</div>
             </div>
         </div>
     </div>
@@ -247,52 +305,142 @@
     </div>
 
     <script>
-        // GAME DECK
-        // Customize your images by changing the "image" URL string below to any image web link!
+        // We added your classic favorite characters as well as the newly requested aliens here.
+        // Feel free to swap any "image" link below with standard image web URLs.
         const deck = [
             {
                 name: "Heatblast",
-                image: "C:\Users\amand\Downloads\Heatblast.png", 
+                image: "https://static.wikia.nocookie.net/ben10/images/2/20/Heatblast_omniverse_official.png/", 
                 trivia: [
-                    "The very first alien form Ben ever unlocked in the pilot episode.",
-                    "A Pyronite originating from the magma star Pyros.",
-                    "Can manipulate fire, fly on a slab of rock, and absorb heat completely."
+                    "The very first alien form Ben ever transformed into in the pilot episode.",
+                    "A Pyronite originating from the fiery star Pyros.",
+                    "He is made of bright magma, can shoot intense fire blasts, and fly on a flame board."
                 ]
             },
             {
                 name: "Four Arms",
-                image: "C:\Users\amand\Downloads\Four_arms_os_render.webp",
+                image: "https://static.wikia.nocookie.net/ben10/images/4/4f/OS_Four_Arms_2.png/",
                 trivia: [
-                    "A Tetramand species from the desert world of Khoros.",
-                    "Possesses immense physical strength and highly durable, armored skin.",
-                    "Can generate sonic shockwaves simply by clapping his hands."
+                    "A Tetramand species originating from the desert world Khoros.",
+                    "Features bright red skin, highly durable heavy body armor, and four massive muscular limbs.",
+                    "Can generate sonic shockwaves simply by clapping his giant hands together."
                 ]
             },
             {
                 name: "XLR8",
-                image: "C:\Users\amand\Downloads\XLR8.jpg",
+                image: "https://static.wikia.nocookie.net/ben10/images/5/57/XLR8_OV2.png/",
                 trivia: [
-                    "A sleek Kineceleran capable of manipulating friction to sprint past 500 MPH.",
-                    "Features a built-in tactical black visor that automatically clips over his face.",
-                    "Has ball-shaped wheels on his feet making him navigate smoothly on ice or water."
+                    "A sleek, blue/black raptor-like Kineceleran that can sprint past 500 MPH.",
+                    "Features a built-in black visor that automatically slides down to protect his face.",
+                    "Navigates easily across water or up walls due to spherical balls on his feet."
                 ]
             },
             {
                 name: "Diamondhead",
-                image: "C:\Users\amand\Downloads\Diamondhead_B10.PNG.webp",
+                image: "https://static.wikia.nocookie.net/ben10/images/7/75/Diamondhead_B10.PNG/r",
                 trivia: [
-                    "A crystalline Petrosapien whose body is denser than diamond.",
-                    "Can manipulate his structure to create crystal spikes, shields, and blades.",
-                    "His home planet Petropia was infamously shattered by the conqueror Vilgax."
+                    "A crystalline Petrosapien whose pale-green body is denser than diamond.",
+                    "He is immune to lasers because his body reflects and refracts energy.",
+                    "Can shape-shift his crystal limbs into razor-sharp blades, shields, and spikes."
                 ]
             },
             {
                 name: "Upgrade",
-                image: "C:\Users\amand\Downloads\UpgradeBenTen.jpg",
+                image: "https://static.wikia.nocookie.net/ben10/images/6/62/Upgrade_Model.png/",
                 trivia: [
-                    "A liquid-metal biomechanical lifeform accidentally created by the Galvans.",
-                    "Can seamlessly attach to, control, and technologically upgrade any machine.",
-                    "Fires a high-powered plasma energy beam straight out of his primary circular eye."
+                    "A liquid-metal biomechanical lifeform accidentally created by the super-smart Galvans.",
+                    "Can wrap himself around any machine to upgrade and control it.",
+                    "He is covered in green glowing circuits and fires a plasma beam out of his circular eye."
+                ]
+            },
+            {
+                name: "Cannonbolt",
+                image: "https://static.wikia.nocookie.net/ben10/images/1/15/Cannonbolt.png/",
+                trivia: [
+                    "An Arburian Pelarota who can curl into a giant sphere and roll at high speeds.",
+                    "His hard white-and-yellow shell makes him virtually invulnerable inside.",
+                    "He was the first 'unlocked' alien that Ben discovered accidentally in the Omnitrix."
+                ]
+            },
+            {
+                name: "Grey Matter",
+                image: "https://static.wikia.nocookie.net/ben10/images/1/1d/Grey_matter_profile.png/",
+                trivia: [
+                    "Only about 5 inches tall, but possesses a super-genius level intellect.",
+                    "Can instantly understand any machine, dismantle tech, and scale vertical surfaces.",
+                    "He belongs to the Galvan species, the exact race that created the Omnitrix."
+                ]
+            },
+            {
+                name: "Stinkfly",
+                image: "https://static.wikia.nocookie.net/ben10/images/4/4d/Stinkfly_os_render.png/",
+                trivia: [
+                    "A four-eyed insectoid alien with 360-degree vision and a razor-sharp tail.",
+                    "Shoots highly flammable, sticky slime from his eye ducts and mouth.",
+                    "Extremely fast in the air, but cannot fly if his fragile wings get wet."
+                ]
+            },
+            {
+                name: "Wildvine",
+                image: "https://static.wikia.nocookie.net/ben10/images/6/61/Wildvine_Flors_Verdance.png/",
+                trivia: [
+                    "A single-eyed, plant-like alien who can stretch his vines and grow thorns at will.",
+                    "Can merge with other plant life, regenerate, and tunnel underground.",
+                    "Flinges explosive seeds from the yellow pods on his back for ranged attacks."
+                ]
+            },
+            {
+                name: "Wildmutt",
+                image: "https://static.wikia.nocookie.net/ben10/images/3/32/Ben_10_Wildmutt_design2.png/",
+                trivia: [
+                    "A orange, beast-like Vulpimancer who has no eyes or tail.",
+                    "He uses gill-like vents on his neck to sense heat and sound like radar.",
+                    "Communicates entirely through raw snarls, growls, and roars."
+                ]
+            },
+            {
+                name: "Humungousaur",
+                image: "https://static.wikia.nocookie.net/ben10fanfiction/images/1/19/Humungousaur_BTOU.png/",
+                trivia: [
+                    "A massive dinosaur-like Vaxasaurian standing at 12 feet tall.",
+                    "Can increase his size up to 60 feet tall, multiplying his physical strength.",
+                    "Develops heavy stegosaurian armor plates along his tail when growing larger."
+                ]
+            },
+            {
+                name: "Way Big",
+                image: "https://static.wikia.nocookie.net/ben10/images/d/d4/Way_Big_OV_Artwork.PNG/",
+                trivia: [
+                    "A colossal, mountain-sized alien standing over 100 feet tall.",
+                    "He is a To'kustar, a species born inside cosmic superstorms.",
+                    "Fires a devastating, bright cosmic beam by crossing his arms into an 'L' shape."
+                ]
+            },
+            {
+                name: "Alien X",
+                image: "https://static.wikia.nocookie.net/ben10/images/e/ee/Alien_X_2.png/",
+                trivia: [
+                    "An omnipotent star-filled alien with the god-like power to rewrite space and time.",
+                    "To act, Ben must debate and convince two giant heads: Bellicus and Serena.",
+                    "He is so powerful that he casually recreated the entire universe after its destruction."
+                ]
+            },
+            {
+                name: "Spidermonkey",
+                image: "https://static.wikia.nocookie.net/ben-10-ultra-acao/images/1/1b/20130228175510%21Macaco_aranha_UAF.jpg/",
+                trivia: [
+                    "A blue, four-armed Arachnichimp who combines monkey agility with spider traits.",
+                    "Can climb any wall and shoot sticky, bulletproof webs from his tail.",
+                    "Possesses six eyes in total, allowing him supreme vision and combat awareness."
+                ]
+            },
+            {
+                name: "Ghostfreak",
+                image: "https://static.wikia.nocookie.net/ben10/images/a/a3/GhostfreakPose2.png/",
+                trivia: [
+                    "A creepy phantom-like alien who can turn invisible and pass through solid walls.",
+                    "Has a single tracks eye slit and can possess other living creatures.",
+                    "Actually has his own consciousness and tried to escape the Omnitrix."
                 ]
             }
         ];
@@ -312,7 +460,13 @@
         const scoringControls = document.getElementById('scoring-controls');
         const nextControl = document.getElementById('next-control');
 
-        // Initialize Game
+        // Dynamic fallback in case internet URLs fail to load
+        function handleImgError(img) {
+            const name = document.getElementById('alien-name').textContent;
+            // Generate a premium green-themed SVG placeholder with the alien's name
+            img.src = `https://placehold.co/400x300/121e17/00ff22?text=${encodeURIComponent(name)}`;
+        }
+
         function initGame() {
             totalEl.textContent = deck.length;
             loadCard(currentIndex);
@@ -322,10 +476,9 @@
             hasFlippedCurrentCard = false;
             cardEl.classList.remove('is-flipped');
             
-            // Set up indicators
             indexEl.textContent = index + 1;
             
-            // Load trivia list items
+            // Clean out old text and load new trivia bullet points
             triviaDumpEl.innerHTML = "";
             deck[index].trivia.forEach(item => {
                 const li = document.createElement('li');
@@ -333,11 +486,11 @@
                 triviaDumpEl.appendChild(li);
             });
 
-            // Load back of card asset links
-            alienImgEl.src = deck[index].image;
+            // Set the back of the card identity values
             alienNameEl.textContent = deck[index].name;
+            alienImgEl.src = deck[index].image;
 
-            // Reset controller view
+            // Manage visible button groups
             scoringControls.classList.remove('hidden');
             nextControl.classList.add('hidden');
         }
@@ -349,7 +502,7 @@
 
         function submitAnswer(isCorrect) {
             if (!hasFlippedCurrentCard) {
-                // Force a flip so they see the answer if they click early
+                // Instantly flip the card so they see the alien
                 flipCard();
             }
             if (isCorrect) {
@@ -366,13 +519,14 @@
             if (currentIndex < deck.length) {
                 loadCard(currentIndex);
             } else {
-                // Game Over Screen Override
+                // Game Over Score Card Display
                 document.querySelector('.game-container').innerHTML = `
-                    <div style="background: #1e1e1e; padding: 40px; border-radius: 20px; border: 3px solid var(--omnitrix-green); text-align: center; height: 80%; display: flex; flex-direction: column; justify-content: center;">
-                        <h2 style="color: var(--omnitrix-green); font-size: 2rem;">DECK COMPLETE</h2>
-                        <p style="font-size: 1.2rem; margin: 20px 0;">Your Brother's Final Score:</p>
-                        <div style="font-size: 4rem; font-weight: bold; color: white;">${score}</div>
-                        <p style="color: #666; margin-top: 20px;">Omnitrix power cells depleted.</p>
+                    <div class="results-panel">
+                        <h2>Omnitrix Calibrated</h2>
+                        <p style="font-size: 1.1rem; margin: 10px 0; color: var(--text-muted);">Final Mission Score:</p>
+                        <div class="results-score">${score} / ${deck.length * 10}</div>
+                        <p style="color: var(--omnitrix-green); font-size: 0.95rem; margin-top: 15px; letter-spacing: 1px;">YOU ARE A TRUE HERO!</p>
+                        <button class="btn btn-next" style="margin-top: 20px; flex: none;" onclick="location.reload()">Restart Challenge</button>
                     </div>
                 `;
                 nextControl.classList.add('hidden');
